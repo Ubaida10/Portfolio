@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,8 @@ const ContactSection = () => {
     email: "",
     message: "",
   });
+  
+  const [isSending, setIsSending] = useState(false); // Added loading state
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -15,11 +18,35 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // This would typically connect to a backend service
-    console.log("Form submitted:", formData);
-    // For now, just reset the form
-    setFormData({ name: "", email: "", message: "" });
-    alert("Thanks for your message! This is a demo, so it wasn't actually sent.");
+    setIsSending(true);
+
+    // EmailJS configuration - Replace with your actual credentials
+    const serviceID = 'service_gue5dka';     // Get from EmailJS dashboard
+    const templateID = 'template_9ygzu7u';   // Get from EmailJS dashboard
+    const publicKey = 'Ly-6EJ7puGkCpMQ0V';     // Get from EmailJS dashboard
+
+    // Prepare email parameters
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      to_email: 'abuubaidaalj@gmail.com',    // Your predefined email
+      message: formData.message,
+    };
+
+    // Send email using EmailJS
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        setFormData({ name: "", email: "", message: "" });
+        alert("Message sent successfully!");
+      })
+      .catch((error) => {
+        console.error('Failed to send email:', error);
+        alert("Failed to send message. Please try again later.");
+      })
+      .finally(() => {
+        setIsSending(false);
+      });
   };
 
   return (
@@ -70,7 +97,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-medium mb-1 text-white">Location</h4>
-                  <p className="text-white/70">San Francisco, CA</p>
+                  <p className="text-white/70">Lahore, Pakistan</p>
                 </div>
               </div>
             </div>
@@ -152,10 +179,13 @@ const ContactSection = () => {
               
               <button
                 type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-accent-purple to-accent-teal rounded-lg font-medium text-white hover:opacity-90 transition-opacity duration-300 flex items-center gap-2"
+                disabled={isSending} // Disable button while sending
+                className={`px-6 py-3 bg-gradient-to-r from-accent-purple to-accent-teal rounded-lg font-medium text-white transition-opacity duration-300 flex items-center gap-2 ${
+                  isSending ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
+                }`}
               >
                 <Send className="w-4 h-4" />
-                Send Message
+                {isSending ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>

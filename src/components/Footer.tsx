@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <p className="text-white/70">
-              © {new Date().getFullYear()} Muhammad Abu Ubaida. All rights reserved.
+              © {new Date().getFullYear()} Abu Ubaida. All rights reserved.
             </p>
           </div>
           
@@ -33,7 +33,7 @@ const Footer = () => {
               <Linkedin className="w-5 h-5" />
             </a>
             <a
-              href="abuubaidaalj@gmail.com"
+              href="mailto:abuubaidaalj@gmail.com"
               className="p-2 text-white/70 hover:text-accent-purple transition-colors duration-200"
             >
               <Mail className="w-5 h-5" />
