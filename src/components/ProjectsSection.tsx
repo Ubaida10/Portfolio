@@ -6,7 +6,7 @@ const ProjectsSection = () => {
     {
       title: "Virtual Fashion Fit",
       description: "Virtual Fashion Fit is an AI-powered application that lets users virtually try on traditional garments. Built with Angular and ASP.NET Core, it integrates computer vision for accurate garment detection and real-time image processing, enhancing the online shopping experience.",
-      technologies: ["Angular", "Computer Vision", "Deep Learning", ".NET", "NLP"],
+      technologies: ["Angular", "Computer Vision", "Deep Learning", ".NET", "CNN"],
       image: "bg-gradient-to-br from-violet-900/20 to-purple-900/20",
       links: {
         github: "#",
